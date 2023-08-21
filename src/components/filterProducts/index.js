@@ -9,6 +9,7 @@ import {getProducts} from "../../redux/actions/productAction";
 export default function FilterProducts() {
     const [value, setValue] = React.useState([20, 1000]);
     const [title, setTitle] = React.useState('')
+    const [categoryId, setCategoryId] = React.useState(0)
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -35,7 +36,13 @@ export default function FilterProducts() {
         }
     };
 
-    console.log(value, 'value')
+    const handleSelect = (e) => {
+        setCategoryId(Number(e.target.value))
+        dispatch(getProducts(undefined, undefined, categoryId))
+    }
+
+    console.log(categoryId, 'category')
+
 
     const handleSearch = () => {
         if (title) {
@@ -60,6 +67,14 @@ export default function FilterProducts() {
                 }}
                 className={'filter'}
             >
+                <Box>
+                    <select value={categoryId} onChange={(e) => handleSelect(e)} >
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                </Box>
                 <Box>
                     <Input
                         placeholder='search by title'

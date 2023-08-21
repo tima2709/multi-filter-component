@@ -1,10 +1,23 @@
 import axios from "axios";
 
 
-export const getProducts = (min_max, title) => {
+
+
+export const getProducts = (min_max, title, categoryId) => {
     console.log(title, 'title2')
     console.log(min_max, 'min_max')
-    if (min_max && !title) {
+    console.log(categoryId, 'id2')
+
+    if (categoryId && !min_max && !title) {
+        console.log(categoryId, 'id')
+        return (dispatch) => {
+            axios.get(`https://api.escuelajs.co/api/v1/products/?categoryId=${categoryId}`)
+                .then(({data}) => {
+                    console.log(data, 'data1')
+                    dispatch({type: 'GET_PRODUCTS', payload: data})
+                })
+        }
+    } else if (min_max && !title) {
         return (dispatch) => {
             let min = min_max[0]
             let max = min_max[1]
