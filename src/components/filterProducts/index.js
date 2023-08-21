@@ -6,8 +6,6 @@ import {useDispatch} from "react-redux";
 import {getProducts} from "../../redux/actions/productAction";
 
 
-
-
 export default function FilterProducts() {
     const [value, setValue] = React.useState([20, 1000]);
     const [title, setTitle] = React.useState('')
@@ -22,17 +20,29 @@ export default function FilterProducts() {
 
     const handleChange1 = (e) => {
         setValue([Number(e.target.value), value[1]])
-        dispatch(getProducts(value, title))
+        if (title) {
+            return dispatch(getProducts(value, title))
+        } else {
+            return dispatch(getProducts(value))
+        }
     };
     const handleChange2 = (e) => {
         setValue([value[0], Number(e.target.value)])
-        dispatch(getProducts(value, title))
+        if (title) {
+            dispatch(getProducts(value, title))
+        } else {
+            dispatch(getProducts(value))
+        }
     };
 
     console.log(value, 'value')
 
     const handleSearch = () => {
-        dispatch(getProducts(value, title))
+        if (title) {
+            dispatch(getProducts(value, title))
+        } else {
+            dispatch(getProducts(value))
+        }
         setTitle('')
     }
 
